@@ -18,23 +18,26 @@ public class ToolsController {
     @Autowired
     private ToolsService service;
 
-
+    //listando todas as ferramentas
     @GetMapping
     public ResponseEntity findALL(){
         List<Tools> allTools = service.getAll();
 
         return ResponseEntity.ok().body(allTools);
     }
+
+    //listando apenas a tag da ferramenta
     @GetMapping("/findByTag")
     public ResponseEntity findToolsByTags(@RequestParam String tags){
         List<Tools> toolsList = service.findToolsByTag(tags);
 
         return ResponseEntity.ok().body(toolsList);
     }
+
+    //Cadastrando as novas ferramentas
     @PostMapping
     public ResponseEntity postTools(@RequestBody ToolsDTO toolsDTO){
         Tools toolsToBepost = toolsDTO.toType();
-
         ToolsResponse toolsResponse = service.saveTool(toolsToBepost);
 
 
@@ -47,6 +50,7 @@ public class ToolsController {
         return ResponseEntity.created(headerlocation).body(toolsResponse);
     }
 
+    //deletando ferramentas pelo seu ID
     @DeleteMapping
     public ResponseEntity deleteTools(@RequestParam Long id){
         service.deleteToolId(id);
